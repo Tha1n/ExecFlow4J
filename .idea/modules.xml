@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Desktop.iml" filepath="$PROJECT_DIR$/Desktop.iml" />
+      <module fileurl="file://$PROJECT_DIR$/workflow-visualizer/workflow-visualizer.iml" filepath="$PROJECT_DIR$/workflow-visualizer/workflow-visualizer.iml" />
     </modules>
   </component>
 </project>
