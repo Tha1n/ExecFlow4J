@@ -20,6 +20,7 @@ public class ProgramImp implements Program {
         this.name = name;
         currentFunction = null;
         functions = new ArrayList<Function>();
+        programs.put(this.name, this);
     }
 
     @Override
