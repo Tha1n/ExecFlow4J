@@ -7,7 +7,7 @@ import spoon.reflect.declaration.CtMethod;
  * TODO --> Adding Comment
  * Created by alxqu on 16/11/2016.
  */
-public class FunctionVisitor implements IVisitor {
+public class MethodVisitor implements IVisitor {
 
     @Override
     public void visit(CtElement ctElement) {
