@@ -3,6 +3,7 @@ package examples;
 import core.FunctionImp;
 import core.Program;
 import core.ProgramImp;
+import graphic.GraphicsProgram;
 
 /**
  * Created by steve on 30/11/2016.
@@ -11,6 +12,8 @@ public class Demo2 {
 
     public static void main(String[] args){
         Program program = new ProgramImp(Demo2.class.getSimpleName());
+        GraphicsProgram frame = new GraphicsProgram(program, 1000);
+        frame.setVisible(true);
 
         // Start main
         program.setCurrentFunction(new FunctionImp("main", "Main", Demo2.class.getSimpleName()));
