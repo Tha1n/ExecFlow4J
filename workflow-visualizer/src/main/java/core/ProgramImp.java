@@ -1,5 +1,6 @@
 package core;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +22,17 @@ public class ProgramImp implements Program {
         currentFunction = null;
         functions = new ArrayList<Function>();
         programs.put(this.name, this);
+    }
+
+    @Override
+    public void draw(Graphics2D g) {
+
+    }
+
+    @Override
+    public int[] draw(Graphics2D g, int[] xy) {
+        //TODO
+        return xy;
     }
 
     @Override
