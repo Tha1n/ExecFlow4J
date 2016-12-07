@@ -17,6 +17,12 @@ import java.util.Set;
  */
 public class MethodProcessor extends AbstractProcessor<CtClass> {
 
+    private MethodVisitor m_visitor;
+
+    public MethodProcessor(MethodVisitor v) {
+        m_visitor = v;
+    }
+
     @Override
     public void process(CtClass ctClass) {
         // Retrieve methods for current class
@@ -27,7 +33,7 @@ public class MethodProcessor extends AbstractProcessor<CtClass> {
 
         // For Each methods, insert our visitor
         for (CtMethod method : methods) {
-            processMethod(method, visitor);
+            processMethod(method, m_visitor);
         }
     }
 
