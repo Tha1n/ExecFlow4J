@@ -1,5 +1,6 @@
 package core;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,6 +45,17 @@ public class FunctionImp implements Function {
             if (! ended) return System.currentTimeMillis() - time;
             else return time;
         else return time;
+    }
+
+    @Override
+    public void draw(Graphics2D g) {
+
+    }
+
+    @Override
+    public int[] draw(Graphics2D g, int[] xy) {
+        //TODO
+        return xy;
     }
 
     public String getName(){

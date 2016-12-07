@@ -1,11 +1,12 @@
 package core;
 
+import java.awt.*;
 import java.util.List;
 
 /**
  * Created by steve on 16/11/2016.
  */
-public interface Function {
+public interface Function extends Drawing {
 
     /**
      * Nom de la fonction

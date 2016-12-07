@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by steve on 17/11/2016.
  */
-public interface Program {
+public interface Program extends Drawing {
 
     /**
      * Nom du programme

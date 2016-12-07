@@ -10,10 +10,8 @@ import java.awt.*;
  */
 public class PanelProgram extends JPanel {
 
-    public final static int STARTX = 20;
-    public final static int STARTY = 20;
-
     private Program program;
+
     public PanelProgram(Program program){
         super();
         this.program = program;
@@ -26,8 +24,6 @@ public class PanelProgram extends JPanel {
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
 
-        g2d.setColor(Color.BLACK);
-
-        //TODO
+        program.draw(g2d);
     }
 }
