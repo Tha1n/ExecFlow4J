@@ -15,7 +15,7 @@ public class Demo1 {
         GraphicsProgram frame = new GraphicsProgram(program, 100);
         frame.startLoop();
 
-        program.setCurrentFunction(new FunctionImp("main", "Main", Demo1.class.getSimpleName()));
+        program.setCurrentFunction(new FunctionImp("main", Demo1.class.getSimpleName(), Demo1.class.getSimpleName()));
         program.getCurrentFunction().startFunction();
 
         sleep(500);

@@ -15,6 +15,7 @@ public class PanelProgram extends JPanel {
     public PanelProgram(Program program){
         super();
         this.program = program;
+        setBackground(Color.WHITE);
     }
 
     @Override
@@ -24,6 +25,7 @@ public class PanelProgram extends JPanel {
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
 
-        program.draw(g2d);
+        int[] xy = program.draw(g2d);
+        // TODO check drawing size if we have to change panel size
     }
 }

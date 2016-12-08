@@ -11,7 +11,7 @@ public interface Drawing {
      * Dessine une représentation de l'objet
      * @param g objet sur lequel dessiner
      */
-    public void draw(Graphics2D g);
+    public int[] draw(Graphics2D g);
 
     /**
      * Dessine une représentation de l'objet
