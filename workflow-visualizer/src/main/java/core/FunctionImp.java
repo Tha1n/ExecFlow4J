@@ -79,20 +79,22 @@ public class FunctionImp implements Function {
 
             g.drawString(toString(), xy[0] + 5, xy[1] + 15);
 
-            if (! getCallees().isEmpty())
+            if (! getCallees().isEmpty()) {
                 for (Function fonction : getCallees()) {
                     int[] newXY = fonction.draw(g, new int[]{
                             oldX + (WIDTH / 2) + MARGINX,
-                            xy[1] + HEIGHT + MARGINY });
+                            xy[1] + HEIGHT + MARGINY});
 
                     g.drawLine(oldX + (WIDTH / 2), (int) (xy[1] + (1.5 * HEIGHT) + MARGINY),
                             oldX + (WIDTH / 2) + MARGINX, (int) (xy[1] + (1.5 * HEIGHT) + MARGINY));
 
-                    xy[1] = newXY[1] + MARGINY;
+                    xy[1] = newXY[1];
 
                     if (maxSize[0] < newXY[0]) maxSize[0] = newXY[0];
                     if (maxSize[1] < newXY[1]) maxSize[1] = newXY[1];
                 }
+                xy[1] += MARGINY;
+            }
             else {
                 xy[1] = xy[1] + HEIGHT + MARGINY;
                 if (maxSize[1] < xy[1]) maxSize[1] = xy[1];
