@@ -1,10 +1,12 @@
 package analysis.processor;
 
-import analysis.visitor.MethodVisitor;
 import spoon.processing.AbstractProcessor;
-import spoon.reflect.code.CtCodeSnippetStatement;
+import spoon.reflect.code.CtStatement;
+import spoon.reflect.code.CtStatementList;
 import spoon.reflect.declaration.CtClass;
 import spoon.reflect.declaration.CtMethod;
+import spoon.reflect.visitor.filter.TypeFilter;
+import spoon.support.reflect.code.CtStatementListImpl;
 
 import java.util.Set;
 
@@ -16,7 +18,7 @@ public class MethodProcessor extends AbstractProcessor<CtClass> {
 
     @Override
     public void process(CtClass ctClass) {
-        // Insert correct import for visitor
+        // Insert correct import for visitor TODO
         //ctClass.insertBefore(null);
 
         // Retrieve methods for current class
@@ -29,29 +31,25 @@ public class MethodProcessor extends AbstractProcessor<CtClass> {
     }
 
     private void processMethod(final CtMethod method, final CtClass ctClass) {
-        CtCodeSnippetStatement injectedCode;
+        CtStatementList injectedCode = new CtStatementListImpl<>();
         if (method.getSimpleName().equals("main")) {
-            injectedCode = getFactory().Code().createCodeSnippetStatement(
-                    "Program program = new ProgramImp(Demo1.class.getSimpleName());\n" +
-                            "        GraphicsProgram frame = new GraphicsProgram(program, 100);\n" +
-                            "        frame.startLoop();"
-            );
+            injectedCode.addStatement(getFactory().Code().createCodeSnippetStatement("Program program = new ProgramImp(Demo1.class.getSimpleName())"));
+            injectedCode.addStatement(getFactory().Code().createCodeSnippetStatement("GraphicsProgram frame = new GraphicsProgram(program, 100)"));
+            injectedCode.addStatement(getFactory().Code().createCodeSnippetStatement("frame.startLoop()"));
         } else {
-            injectedCode = getFactory().Code().createCodeSnippetStatement(
+            injectedCode.addStatement(getFactory().Code().createCodeSnippetStatement(
                     "ProgramImp.getProgram().setCurrentFunction(new FunctionImp(\"" +
                             method.getSimpleName() + "\", " +
                             ctClass.getSimpleName() + ", " +
-                            ctClass.getSimpleName() + "));\n" +
-                            "ProgramImp.getProgram().getCurrentFunction().startFunction();"
-            );
+                            ctClass.getSimpleName() + "))"));
+            injectedCode.addStatement(getFactory().Code().createCodeSnippetStatement("ProgramImp.getProgram().getCurrentFunction().startFunction()"));
         }
 
         // Insert at the beginning of the method
         injectedCode.setParent(method.getBody());
         method.getBody().insertBegin(injectedCode);
 
-        injectedCode = getFactory().Code().createCodeSnippetStatement("program.getCurrentFunction().endFunction();");
         // Insert at the end of the method
-        method.getBody().insertEnd(injectedCode);
+        method.getBody().getLastStatement().insertBefore(getFactory().Code().createCodeSnippetStatement("program.getCurrentFunction().endFunction()"));
     }
 }
