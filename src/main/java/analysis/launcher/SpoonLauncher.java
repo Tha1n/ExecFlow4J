@@ -6,14 +6,16 @@ import spoon.Launcher;
 import spoon.SpoonAPI;
 import spoon.support.StandardEnvironment;
 
-import java.io.File;
+import java.io.*;
+import java.nio.channels.FileChannel;
+import java.util.ArrayList;
 
 /**
  * Created by steve on 19/10/2016.
  */
 public class SpoonLauncher {
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         spoonProcessing("./src/test", "./src/test/resources/java/SecondFolder/Sample2.java");
     }
 
@@ -45,8 +47,45 @@ public class SpoonLauncher {
                     addInputResource(spoon, child.getAbsolutePath());
                 } else if (child.isFile() && child.getAbsolutePath().endsWith(".java")) {
                     spoon.addInputResource(child.getAbsolutePath());
+
+                    addImportForFile(child.getAbsolutePath());
                 }
             }
+        }
+    }
+
+    private static void addImportForFile(String absolutePath) {
+        try {
+            String content = "import core.Program;\n" + "import core.GraphicsProgram;";
+            insert(absolutePath, 1, content);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public static void insert(String filename, int position, String content) throws IOException {
+        BufferedReader reader = null;
+        BufferedWriter writer = null;
+        ArrayList list = new ArrayList();
+
+        try {
+            reader = new BufferedReader(new FileReader(filename));
+            String tmp;
+            while ((tmp = reader.readLine()) != null)
+                list.add(tmp);
+            reader.close();
+
+            list.add(position, content);
+
+            writer = new BufferedWriter(new FileWriter(filename));
+            for (int i = 0; i < list.size(); i++)
+                writer.write(list.get(i) + "\r\n");
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            reader.close();
+            writer.close();
         }
     }
 }

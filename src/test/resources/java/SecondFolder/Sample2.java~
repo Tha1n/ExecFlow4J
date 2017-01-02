@@ -1,15 +1,17 @@
-package java.testmethodprocessor;
-import core.Program;
-import core.GraphicsProgram;
+ackage java.SecondFolder;
 
 /**
  * TODO --> Adding Comment
  * Created by alxqu on 16/11/2016.
  */
-public class Sample1{
+public class Sample2{
 
-    public void test1() {
+    public void main(String[] args) {
+        test4(5);
 
+        System.out.println("ihgi");
+
+        System.out.println("iulguifgh");
     }
 
     public int test2() {
@@ -34,3 +36,4 @@ public class Sample1{
         return t * 2;
     }
 }
+

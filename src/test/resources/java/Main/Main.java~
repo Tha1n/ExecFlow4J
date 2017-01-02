@@ -1,6 +1,4 @@
-package java.Main;
-import core.Program;
-import core.GraphicsProgram;
+ackage java.Main;
 
 /**
  * TODO --> Adding Comment
@@ -14,3 +12,4 @@ public class Main{
         System.out.println("iulguifgh");
     }
 }
+

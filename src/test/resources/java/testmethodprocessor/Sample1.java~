@@ -1,6 +1,4 @@
-package java.testmethodprocessor;
-import core.Program;
-import core.GraphicsProgram;
+ackage java.testmethodprocessor;
 
 /**
  * TODO --> Adding Comment
@@ -34,3 +32,4 @@ public class Sample1{
         return t * 2;
     }
 }
+

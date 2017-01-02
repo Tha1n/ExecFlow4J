@@ -1,6 +1,4 @@
-package java.SecondFolder;
-import core.Program;
-import core.GraphicsProgram;
+ackage java.SecondFolder;
 
 /**
  * TODO --> Adding Comment
@@ -20,3 +18,4 @@ public class Sample3{
         }
     }
 }
+

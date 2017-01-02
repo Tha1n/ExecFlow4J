@@ -1,4 +1,6 @@
 package java.SecondFolder;
+import core.Program;
+import core.GraphicsProgram;
 
 /**
  * TODO --> Adding Comment
