@@ -3,6 +3,8 @@ import spoon.Launcher;
 import spoon.SpoonAPI;
 import spoon.support.StandardEnvironment;
 
+import java.io.File;
+
 /**
  * Created by steve on 19/10/2016.
  */
@@ -19,7 +21,23 @@ public class Main {
 
         MethodProcessor proc = new MethodProcessor();
         spoon.addProcessor(proc);
-        spoon.addInputResource("src/test/resources/java/testmethodprocessor/Sample1.java");
+
+        addInputResource(spoon, "./src/test");
+
         spoon.run();
+    }
+
+    private static void addInputResource(SpoonAPI spoon, String root) {
+        File dir = new File(root);
+        File[] directoryListing = dir.listFiles();
+        if (directoryListing != null) {
+            for (File child : directoryListing) {
+                if (child.isDirectory()) {
+                    addInputResource(spoon, child.getAbsolutePath());
+                } else if (child.isFile() && child.getAbsolutePath().endsWith(".java")) {
+                    spoon.addInputResource(child.getAbsolutePath());
+            }
+        }
+    }
     }
 }
