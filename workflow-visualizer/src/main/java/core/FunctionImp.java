@@ -79,6 +79,9 @@ public class FunctionImp implements Function {
 
             g.drawString(toString(), xy[0] + 5, xy[1] + 15);
 
+            if (ended)
+                g.drawString(getTime() + " ms", xy[0] + WIDTH + 5, xy[1] + 15);
+
             if (! getCallees().isEmpty()) {
                 for (Function fonction : getCallees()) {
                     int[] newXY = fonction.draw(g, new int[]{
