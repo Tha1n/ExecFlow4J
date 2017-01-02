@@ -22,7 +22,7 @@ public class SelectEntryPointAction implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         JFileChooser chooser = new JFileChooser();
         chooser.setCurrentDirectory(new java.io.File(window.getAddress().getText()));
-        chooser.setDialogTitle("Choose Point Entry");
+        chooser.setDialogTitle("Choose Entry Point");
         chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         chooser.setAcceptAllFileFilterUsed(false);
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Java files", "java", "java");

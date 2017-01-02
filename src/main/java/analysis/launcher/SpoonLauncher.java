@@ -14,7 +14,7 @@ import java.io.File;
 public class SpoonLauncher {
 
     public static void main(String[] args){
-        spoonProcessing("./src/test", "./src/test/resources/java/Main/Main.java");
+        spoonProcessing("./src/test", "./src/test/resources/java/SecondFolder/Sample2.java");
     }
 
     public static void spoonProcessing(String rootFolder, String entryPoint) {
@@ -24,20 +24,16 @@ public class SpoonLauncher {
         env.useTabulations(true);
 
         // Main Spoon API is handle here to ensure particular treatment
-        SpoonAPI mainSpoon;
-        mainSpoon = new Launcher();
-        MainProcessor   mainProc = new MainProcessor();
-        mainSpoon.addProcessor(mainProc);
-        mainSpoon.addInputResource(entryPoint);
-        mainSpoon.run();
-
-        SpoonAPI methSpoon;
-        methSpoon = new Launcher();
+        SpoonAPI spoon;
+        spoon = new Launcher();
         MethodProcessor methProc = new MethodProcessor();
-        methSpoon.addProcessor(methProc);
+        spoon.addProcessor(methProc);
 
-        addInputResource(methSpoon, rootFolder);
-        methSpoon.run();
+        MainProcessor mainProc = new MainProcessor(entryPoint);
+        spoon.addProcessor(mainProc);
+
+        addInputResource(spoon, rootFolder);
+        spoon.run();
     }
 
     private static void addInputResource(SpoonAPI spoon, String root) {
@@ -49,8 +45,8 @@ public class SpoonLauncher {
                     addInputResource(spoon, child.getAbsolutePath());
                 } else if (child.isFile() && child.getAbsolutePath().endsWith(".java")) {
                     spoon.addInputResource(child.getAbsolutePath());
+                }
             }
         }
-    }
     }
 }

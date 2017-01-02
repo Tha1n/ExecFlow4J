@@ -13,8 +13,19 @@ import java.util.Set;
  * Created by alxqu on 02/01/2017.
  */
 public class MainProcessor extends AbstractProcessor<CtClass> {
+
+    private final String mainClass;
+
+    public MainProcessor(String mainClass) {
+        this.mainClass = mainClass;
+    }
+
     @Override
     public void process(CtClass ctClass) {
+        if (! this.mainClass.contains(ctClass.getSimpleName())) {
+            return;
+        }
+
         // Insert correct import for visitor
         ctClass.insertBefore(getFactory().Code().createCodeSnippetStatement("import core.Program"));
         ctClass.insertBefore(getFactory().Code().createCodeSnippetStatement("import core.GraphicsProgram"));
