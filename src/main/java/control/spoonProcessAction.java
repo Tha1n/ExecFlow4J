@@ -21,7 +21,7 @@ public class spoonProcessAction implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         window.getSpoonProcess().setEnabled(false);
         String projectDirectory = window.getAddress().getText();
-        String pointEntry = window.getMain().getText();
+        String entryPoint = window.getMain().getText();
 
         //TODO Alexandre :3
 

@@ -1,7 +1,7 @@
 package view;
 
 import control.SelectAdressAction;
-import control.SelectPointEntryAction;
+import control.SelectEntryPointAction;
 import control.spoonProcessAction;
 
 import javax.swing.*;
@@ -59,8 +59,8 @@ public class MainWindow extends JFrame {
         gc.gridy = 1;
         main = new JTextField();
         main.setEnabled(false);
-        selectMain = new JButton("Select Point Entry");
-        selectMain.addActionListener(new SelectPointEntryAction(this));
+        selectMain = new JButton("Select Entry Point");
+        selectMain.addActionListener(new SelectEntryPointAction(this));
         selectMain.setPreferredSize(new Dimension(150, 25));
         selectMain.setEnabled(false);
         panelAction.add(main, gc);

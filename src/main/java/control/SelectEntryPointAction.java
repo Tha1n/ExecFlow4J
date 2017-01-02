@@ -10,11 +10,11 @@ import java.awt.event.ActionListener;
 /**
  * Created by steve on 02/01/2017.
  */
-public class SelectPointEntryAction implements ActionListener {
+public class SelectEntryPointAction implements ActionListener {
 
     private MainWindow window;
 
-    public SelectPointEntryAction(MainWindow window){
+    public SelectEntryPointAction(MainWindow window){
         this.window = window;
     }
 
@@ -34,7 +34,7 @@ public class SelectPointEntryAction implements ActionListener {
                 window.getSpoonProcess().setEnabled(true);
             }
             else
-                JOptionPane.showMessageDialog(window, "Point entry is not in the chosen directory.",
+                JOptionPane.showMessageDialog(window, "Entry point is not in the chosen directory.",
                         "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
