@@ -12,15 +12,15 @@ import spoon.support.reflect.code.CtStatementListImpl;
 import java.util.Set;
 
 /**
- * TODO --> Adding Comment
+ * A Processor for all methods of a class
  * Created by alxqu on 16/11/2016.
  */
 public class MethodProcessor extends AbstractProcessor<CtClass> {
 
     @Override
     public void process(CtClass ctClass) {
-        // Insert correct import for visitor TODO
-        //ctClass.insertBefore(null);
+        // Insert correct import for visitor
+        ctClass.insertBefore(getFactory().Code().createCodeSnippetStatement("import core.Program"));
 
         // Retrieve methods for current class
         Set<CtMethod> methods = ctClass.getMethods();
@@ -34,18 +34,12 @@ public class MethodProcessor extends AbstractProcessor<CtClass> {
     private void processMethod(final CtMethod method, final CtClass ctClass) {
         CtStatementList injectedCode = new CtStatementListImpl<>();
         // Statements are addded in reverse order
-        if (method.getSimpleName().equals("main")) {
-            injectedCode.addStatement(getFactory().Code().createCodeSnippetStatement("frame.startLoop()"));
-            injectedCode.addStatement(getFactory().Code().createCodeSnippetStatement("GraphicsProgram frame = new GraphicsProgram(program, 100)"));
-            injectedCode.addStatement(getFactory().Code().createCodeSnippetStatement("Program program = new ProgramImp(Demo1.class.getSimpleName())"));
-        } else {
-            injectedCode.addStatement(getFactory().Code().createCodeSnippetStatement("ProgramImp.getProgram().getCurrentFunction().startFunction()"));
-            injectedCode.addStatement(getFactory().Code().createCodeSnippetStatement(
-                    "ProgramImp.getProgram().setCurrentFunction(new FunctionImp(\"" +
-                            method.getSimpleName() + "\", " +
-                            ctClass.getSimpleName() + ", " +
-                            ctClass.getSimpleName() + "))"));
-        }
+        injectedCode.addStatement(getFactory().Code().createCodeSnippetStatement("ProgramImp.getProgram().getCurrentFunction().startFunction()"));
+        injectedCode.addStatement(getFactory().Code().createCodeSnippetStatement(
+                "ProgramImp.getProgram().setCurrentFunction(new FunctionImp(\"" +
+                        method.getSimpleName() + "\", " +
+                        ctClass.getSimpleName() + ", " +
+                        ctClass.getSimpleName() + "))"));
 
         // Insert at the beginning of the method
         injectedCode.setParent(method.getBody());

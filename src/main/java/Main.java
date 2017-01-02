@@ -1,3 +1,4 @@
+import analysis.processor.MainProcessor;
 import analysis.processor.MethodProcessor;
 import spoon.Launcher;
 import spoon.SpoonAPI;
@@ -20,7 +21,9 @@ public class Main {
         spoon = new Launcher();
 
         MethodProcessor proc = new MethodProcessor();
+        MainProcessor mainProc = new MainProcessor();
         spoon.addProcessor(proc);
+        spoon.addProcessor(mainProc);
 
         addInputResource(spoon, "./src/test");
 
