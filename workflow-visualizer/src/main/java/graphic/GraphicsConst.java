@@ -9,6 +9,8 @@ public class GraphicsConst {
 
     public final static int STARTX = 20;
     public final static int STARTY = 20;
+    public final static int ENDX = 100;
+    public final static int ENDY = 20;
     public final static int HEIGHT = 20;
     public final static int WIDTH = 200;
     public final static int MARGINX = 100;

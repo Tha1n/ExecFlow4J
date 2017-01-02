@@ -100,6 +100,8 @@ public class FunctionImp implements Function {
             }
             else {
                 xy[1] = xy[1] + HEIGHT + MARGINY;
+
+                if (maxSize[0] < xy[0] + WIDTH) maxSize[0] = xy[0] + WIDTH;
                 if (maxSize[1] < xy[1]) maxSize[1] = xy[1];
             }
             g.drawLine(oldX + (WIDTH / 2), oldY + HEIGHT, oldX + (WIDTH / 2), xy[1]);

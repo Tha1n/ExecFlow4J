@@ -5,12 +5,15 @@ import core.Program;
 import javax.swing.*;
 import java.awt.*;
 
+import static graphic.GraphicsConst.*;
+
 /**
  * Created by steve on 01/12/2016.
  */
 public class PanelProgram extends JPanel {
 
     private Program program;
+    private JScrollPane pane;
 
     public PanelProgram(Program program){
         super();
@@ -28,6 +31,7 @@ public class PanelProgram extends JPanel {
 
         int[] xy = program.draw(g2d);
 
-        // TODO check drawing size if we have to change panel size
+        setPreferredSize(new Dimension(xy[0] + ENDX, xy[1] + ENDY));
+        revalidate();
     }
 }
