@@ -1,5 +1,4 @@
 import analysis.processor.MethodProcessor;
-import analysis.visitor.MethodVisitor;
 import spoon.Launcher;
 import spoon.SpoonAPI;
 import spoon.support.StandardEnvironment;
@@ -18,8 +17,7 @@ public class Main {
         SpoonAPI spoon;
         spoon = new Launcher();
 
-
-        MethodProcessor proc = new MethodProcessor(new MethodVisitor());
+        MethodProcessor proc = new MethodProcessor();
         spoon.addProcessor(proc);
         spoon.addInputResource("src/test/resources/java/testmethodprocessor/Sample1.java");
         spoon.run();

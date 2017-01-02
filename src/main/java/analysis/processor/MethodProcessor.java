@@ -1,15 +1,10 @@
 package analysis.processor;
 
-import analysis.template.MethodVisitorAcceptTemplate;
 import analysis.visitor.MethodVisitor;
 import spoon.processing.AbstractProcessor;
-import spoon.reflect.code.CtStatement;
+import spoon.reflect.code.CtCodeSnippetStatement;
 import spoon.reflect.declaration.CtClass;
 import spoon.reflect.declaration.CtMethod;
-import spoon.reflect.declaration.CtType;
-import spoon.template.StatementTemplate;
-import spoon.template.Template;
-import spoon.template.TemplateParameter;
 
 import java.util.Set;
 
@@ -19,53 +14,44 @@ import java.util.Set;
  */
 public class MethodProcessor extends AbstractProcessor<CtClass> {
 
-    /**
-     *
-     */
-    private MethodVisitor m_visitor;
-
-    /**
-     * Default constructor of <code>{@link MethodProcessor}</code>
-     * @param v A correct initialized object of <code>{@link MethodVisitor}</code>
-     */
-    public MethodProcessor(MethodVisitor v) {
-        m_visitor = v;
-    }
-
     @Override
     public void process(CtClass ctClass) {
+        // Insert correct import for visitor
+        //ctClass.insertBefore(null);
+
         // Retrieve methods for current class
         Set<CtMethod> methods = ctClass.getMethods();
 
         // For Each methods, insert our visitor
         for (CtMethod method : methods) {
-            processMethod(method, m_visitor);
+            processMethod(method, ctClass);
         }
     }
 
-    private void processMethod(final CtMethod method, final MethodVisitor visitor) {
-        Template t = new MethodVisitorAcceptTemplate();
-        ((MethodVisitorAcceptTemplate) t)._visit_ = new TemplateParameter<MethodVisitor>() {
-            @Override
-            public MethodVisitor S() {
-                return visitor;
-            }
-        };
-        ((MethodVisitorAcceptTemplate) t)._elem_ = new TemplateParameter<CtMethod>() {
-            @Override
-            public CtMethod S() {
-                return method;
-            }
-        };
-
-        CtClass<?> type = (CtClass<?>) method.getParent(CtClass.class);
-        CtStatement injectedCode = (CtStatement) t.apply(type);
+    private void processMethod(final CtMethod method, final CtClass ctClass) {
+        CtCodeSnippetStatement injectedCode;
+        if (method.getSimpleName().equals("main")) {
+            injectedCode = getFactory().Code().createCodeSnippetStatement(
+                    "Program program = new ProgramImp(Demo1.class.getSimpleName());\n" +
+                            "        GraphicsProgram frame = new GraphicsProgram(program, 100);\n" +
+                            "        frame.startLoop();"
+            );
+        } else {
+            injectedCode = getFactory().Code().createCodeSnippetStatement(
+                    "ProgramImp.getProgram().setCurrentFunction(new FunctionImp(\"" +
+                            method.getSimpleName() + "\", " +
+                            ctClass.getSimpleName() + ", " +
+                            ctClass.getSimpleName() + "));\n" +
+                            "ProgramImp.getProgram().getCurrentFunction().startFunction();"
+            );
+        }
 
         // Insert at the beginning of the method
-        method.getBody().insertBegin(injectedCode); //TODO
+        injectedCode.setParent(method.getBody());
+        method.getBody().insertBegin(injectedCode);
 
-
+        injectedCode = getFactory().Code().createCodeSnippetStatement("program.getCurrentFunction().endFunction();");
         // Insert at the end of the method
-        //method.getBody().insertEnd(); // TODO
+        method.getBody().insertEnd(injectedCode);
     }
 }
