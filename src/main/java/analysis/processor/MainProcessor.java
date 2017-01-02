@@ -15,7 +15,7 @@ import java.util.Set;
 public class MainProcessor extends AbstractProcessor<CtClass> {
     @Override
     public void process(CtClass ctClass) {
-        // Insert correct import for visitor TODO
+        // Insert correct import for visitor
         ctClass.insertBefore(getFactory().Code().createCodeSnippetStatement("import core.Program"));
         ctClass.insertBefore(getFactory().Code().createCodeSnippetStatement("import core.GraphicsProgram"));
 

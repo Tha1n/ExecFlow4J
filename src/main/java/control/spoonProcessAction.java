@@ -1,5 +1,6 @@
 package control;
 
+import analysis.launcher.SpoonLauncher;
 import view.MainWindow;
 
 import javax.swing.*;
@@ -23,7 +24,7 @@ public class spoonProcessAction implements ActionListener {
         String projectDirectory = window.getAddress().getText();
         String entryPoint = window.getMain().getText();
 
-        //TODO Alexandre :3
+        SpoonLauncher.spoonProcessing(projectDirectory, entryPoint);
 
         JOptionPane.showMessageDialog(window, "Project has been spooned !",
                 "Process finished", JOptionPane.INFORMATION_MESSAGE);

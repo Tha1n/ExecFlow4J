@@ -1,3 +1,5 @@
+package analysis.launcher;
+
 import analysis.processor.MainProcessor;
 import analysis.processor.MethodProcessor;
 import spoon.Launcher;
@@ -9,25 +11,33 @@ import java.io.File;
 /**
  * Created by steve on 19/10/2016.
  */
-public class Main {
+public class SpoonLauncher {
 
     public static void main(String[] args){
+        spoonProcessing("./src/test", "./src/test/resources/java/Main/Main.java");
+    }
+
+    public static void spoonProcessing(String rootFolder, String entryPoint) {
         StandardEnvironment env = new StandardEnvironment();
         env.setAutoImports(true);
         env.setComplianceLevel(8);
         env.useTabulations(true);
 
-        SpoonAPI spoon;
-        spoon = new Launcher();
+        // Main Spoon API is handle here to ensure particular treatment
+        SpoonAPI mainSpoon;
+        mainSpoon = new Launcher();
+        MainProcessor   mainProc = new MainProcessor();
+        mainSpoon.addProcessor(mainProc);
+        mainSpoon.addInputResource(entryPoint);
+        mainSpoon.run();
 
-        MethodProcessor proc = new MethodProcessor();
-        MainProcessor mainProc = new MainProcessor();
-        spoon.addProcessor(proc);
-        spoon.addProcessor(mainProc);
+        SpoonAPI methSpoon;
+        methSpoon = new Launcher();
+        MethodProcessor methProc = new MethodProcessor();
+        methSpoon.addProcessor(methProc);
 
-        addInputResource(spoon, "./src/test");
-
-        spoon.run();
+        addInputResource(methSpoon, rootFolder);
+        methSpoon.run();
     }
 
     private static void addInputResource(SpoonAPI spoon, String root) {

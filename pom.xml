@@ -50,7 +50,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>Main</mainClass>
+                            <mainClass>analysis.launcher.SpoonLauncher</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
