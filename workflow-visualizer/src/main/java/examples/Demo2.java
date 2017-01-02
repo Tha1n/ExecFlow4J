@@ -19,8 +19,6 @@ public class Demo2 {
         program.setCurrentFunction(new FunctionImp("main", Demo2.class.getSimpleName(), Demo2.class.getSimpleName()));
         program.getCurrentFunction().startFunction();
 
-        sleep(1000);
-
         program.setCurrentFunction(new FunctionImp("firstFunc", Demo2.class.getSimpleName(), Demo2.class.getSimpleName()));
         // Start firstFunc
         program.getCurrentFunction().startFunction();

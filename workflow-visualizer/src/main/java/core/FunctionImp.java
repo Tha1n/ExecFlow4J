@@ -85,16 +85,18 @@ public class FunctionImp implements Function {
                             oldX + (WIDTH / 2) + MARGINX,
                             xy[1] + HEIGHT + MARGINY });
 
+                    g.drawLine(oldX + (WIDTH / 2), (int) (xy[1] + (1.5 * HEIGHT) + MARGINY),
+                            oldX + (WIDTH / 2) + MARGINX, (int) (xy[1] + (1.5 * HEIGHT) + MARGINY));
+
                     xy[1] = newXY[1] + MARGINY;
 
                     if (maxSize[0] < newXY[0]) maxSize[0] = newXY[0];
                     if (maxSize[1] < newXY[1]) maxSize[1] = newXY[1];
                 }
             else {
-                xy[1] = HEIGHT + MARGINY;
+                xy[1] = xy[1] + HEIGHT + MARGINY;
                 if (maxSize[1] < xy[1]) maxSize[1] = xy[1];
             }
-
             g.drawLine(oldX + (WIDTH / 2), oldY + HEIGHT, oldX + (WIDTH / 2), xy[1]);
 
             if (ended){
@@ -107,7 +109,7 @@ public class FunctionImp implements Function {
                 g.setColor(Color.BLACK);
                 g.drawRect(xy[0], xy[1], WIDTH, HEIGHT);
 
-                maxSize[1] = HEIGHT + MARGINY;
+                maxSize[1] = xy[1] + HEIGHT;
             }
         }
 
