@@ -2,12 +2,12 @@ package analysis.launcher;
 
 import analysis.processor.MainProcessor;
 import analysis.processor.MethodProcessor;
+import org.apache.commons.io.FileUtils;
 import spoon.Launcher;
 import spoon.SpoonAPI;
 import spoon.support.StandardEnvironment;
 
 import java.io.*;
-import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 
 /**
@@ -34,8 +34,11 @@ public class SpoonLauncher {
         MainProcessor mainProc = new MainProcessor(entryPoint);
         spoon.addProcessor(mainProc);
 
+        copyProject(rootFolder);
         addInputResource(spoon, rootFolder);
         spoon.run();
+        addImportResource("./spooned");
+        copySpoonedGen(rootFolder, "./spooned");
     }
 
     private static void addInputResource(SpoonAPI spoon, String root) {
@@ -47,11 +50,37 @@ public class SpoonLauncher {
                     addInputResource(spoon, child.getAbsolutePath());
                 } else if (child.isFile() && child.getAbsolutePath().endsWith(".java")) {
                     spoon.addInputResource(child.getAbsolutePath());
+                }
+            }
+        }
+    }
 
+    private static void addImportResource(String root) {
+
+        File dir = new File(root);
+
+        File[] directoryListing = dir.listFiles();
+        if (directoryListing != null) {
+            for (File child : directoryListing) {
+                if (child.isDirectory()) {
+                    addImportResource(child.getAbsolutePath());
+                } else if (child.isFile() && child.getAbsolutePath().endsWith(".java")) {
                     addImportForFile(child.getAbsolutePath());
                 }
             }
         }
+    }
+
+    private static void copyProject(String source){
+        try {
+            FileUtils.copyDirectory(new File(source), new File(source + "-spooned"));
+        } catch (IOException e) {}
+    }
+
+    private static void copySpoonedGen(String source, String spooned){
+        source += "-spooned";
+
+        //TODO
     }
 
     private static void addImportForFile(String absolutePath) {
