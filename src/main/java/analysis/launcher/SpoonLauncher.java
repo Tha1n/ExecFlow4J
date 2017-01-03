@@ -80,7 +80,7 @@ public class SpoonLauncher {
     private static void copySpoonedGen(String target, String spooned){
 
         File folder = new File(target);
-        String targetPath = folder.getAbsolutePath().replace(folder.getName(), folder.getName() + "-spooned");
+        String targetPath = folder.getAbsolutePath().replace(folder.getName(), folder.getName() + "-spooned\\src");
 
         try {
             copyJavaFiles(spooned, targetPath);
