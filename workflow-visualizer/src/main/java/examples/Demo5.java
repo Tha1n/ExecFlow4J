@@ -10,7 +10,7 @@ import graphic.GraphicsProgram;
  */
 public class Demo5 {
 
-    private static int NUMBER_REC = 9;
+    private static int NUMBER_REC = 4;
 
     public static void main(String[] args){
         Program program = new ProgramImp(Demo5.class.getSimpleName());
@@ -27,7 +27,7 @@ public class Demo5 {
             program.setCurrentFunction(new FunctionImp("recursiveFunc", Demo5.class.getSimpleName(), Demo5.class.getSimpleName()));
             // Start recursiveFunc
             program.getCurrentFunction().startFunction();
-            sleep(200);
+            sleep((int) (200 * Math.random()) + 100);
         }
 
         for(int i = 0; i < NUMBER_REC; i++) {

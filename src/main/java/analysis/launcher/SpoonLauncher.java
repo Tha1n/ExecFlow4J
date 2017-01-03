@@ -56,7 +56,7 @@ public class SpoonLauncher {
 
     private static void addImportForFile(String absolutePath) {
         try {
-            String content = "import core.Program;\n" + "import core.GraphicsProgram;";
+            String content = "import core.*;\n" + "import graphic.*;";
             insert(absolutePath, 1, content);
         } catch (IOException e) {
             e.printStackTrace();
