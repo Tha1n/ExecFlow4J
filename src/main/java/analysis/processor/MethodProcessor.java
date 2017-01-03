@@ -34,12 +34,11 @@ public class MethodProcessor extends AbstractProcessor<CtClass> {
     private void processMethod(final CtMethod method, final CtClass ctClass) {
         CtStatementList injectedCode = new CtStatementListImpl<>();
         // Statements are addded in reverse order
-        injectedCode.addStatement(getFactory().Code().createCodeSnippetStatement("ProgramImp.getProgram().getCurrentFunction().startFunction()"));
+        injectedCode.addStatement(getFactory().Code().createCodeSnippetStatement("ProgramImp.getProgram(\"prg\").getCurrentFunction().startFunction()"));
         injectedCode.addStatement(getFactory().Code().createCodeSnippetStatement(
-                "ProgramImp.getProgram().setCurrentFunction(new FunctionImp(\"" +
+                "ProgramImp.getProgram(\"prg\").setCurrentFunction(new FunctionImp(\"" +
                         method.getSimpleName() + "\", " +
-                        ctClass.getSimpleName() + ", " +
-                        ctClass.getSimpleName() + "))"));
+                        ctClass.getSimpleName() + ".class.getSimpleName(), \"prg\"))"));
 
         // Insert at the beginning of the method
         injectedCode.setParent(method.getBody());
@@ -48,9 +47,9 @@ public class MethodProcessor extends AbstractProcessor<CtClass> {
         // Insert at the end of the method
         // If method body is empty or if it's a void method, insert after
         if (method.getBody().getStatements().size() == 0 || method.getSignature().substring(0, 4).equals("void")) {
-            method.getBody().getLastStatement().insertAfter(getFactory().Code().createCodeSnippetStatement("ProgramImp.getProgram().getCurrentFunction().endFunction()"));
+            method.getBody().getLastStatement().insertAfter(getFactory().Code().createCodeSnippetStatement("ProgramImp.getProgram(\"prg\").getCurrentFunction().endFunction()"));
         } else {
-            method.getBody().getLastStatement().insertBefore(getFactory().Code().createCodeSnippetStatement("ProgramImp.getProgram().getCurrentFunction().endFunction()"));
+            method.getBody().getLastStatement().insertBefore(getFactory().Code().createCodeSnippetStatement("ProgramImp.getProgram(\"prg\").getCurrentFunction().endFunction()"));
         }
     }
 }

@@ -27,8 +27,8 @@ public class MainProcessor extends AbstractProcessor<CtClass> {
         }
 
         // Insert correct import for visitor
-        ctClass.insertBefore(getFactory().Code().createCodeSnippetStatement("import core.Program"));
-        ctClass.insertBefore(getFactory().Code().createCodeSnippetStatement("import core.GraphicsProgram"));
+        ctClass.insertBefore(getFactory().Code().createCodeSnippetStatement("import core.*"));
+        ctClass.insertBefore(getFactory().Code().createCodeSnippetStatement("import graphic.*"));
 
         // Retrieve methods for current class
         Set<CtMethod> methods = ctClass.getMethods();
@@ -47,7 +47,7 @@ public class MainProcessor extends AbstractProcessor<CtClass> {
 
         injectedCode.addStatement(getFactory().Code().createCodeSnippetStatement("frame.startLoop()"));
         injectedCode.addStatement(getFactory().Code().createCodeSnippetStatement("GraphicsProgram frame = new GraphicsProgram(program, 100)"));
-        injectedCode.addStatement(getFactory().Code().createCodeSnippetStatement("Program program = new ProgramImp(Demo1.class.getSimpleName())"));
+        injectedCode.addStatement(getFactory().Code().createCodeSnippetStatement("Program program = new ProgramImp(\"prg\")"));
 
         // Insert at the beginning of the method
         injectedCode.setParent(method.getBody());
