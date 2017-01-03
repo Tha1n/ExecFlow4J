@@ -25,7 +25,6 @@ public class SpoonLauncher {
         env.setComplianceLevel(8);
         env.useTabulations(true);
 
-        // Main Spoon API is handle here to ensure particular treatment
         SpoonAPI spoon;
         spoon = new Launcher();
         MethodProcessor methProc = new MethodProcessor();
@@ -56,7 +55,6 @@ public class SpoonLauncher {
     }
 
     private static void addImportResource(String root) {
-
         File dir = new File(root);
 
         File[] directoryListing = dir.listFiles();
@@ -74,13 +72,36 @@ public class SpoonLauncher {
     private static void copyProject(String source){
         try {
             FileUtils.copyDirectory(new File(source), new File(source + "-spooned"));
-        } catch (IOException e) {}
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    private static void copySpoonedGen(String source, String spooned){
-        source += "-spooned";
+    private static void copySpoonedGen(String target, String spooned){
 
-        //TODO
+        File folder = new File(target);
+        String targetPath = folder.getAbsolutePath().replace(folder.getName(), folder.getName() + "-spooned");
+
+        try {
+            copyJavaFiles(spooned, targetPath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void copyJavaFiles(String root, String dest) throws IOException {
+        File dir = new File(root);
+
+        File[] filesList = dir.listFiles();
+        if (filesList != null) {
+            for (File child : filesList) {
+                if (child.isFile() && child.getAbsolutePath().endsWith(".java")) {
+                    FileUtils.copyFileToDirectory(child, new File(dest));
+                } else if (child.isDirectory()) {
+                    copyJavaFiles(child.getAbsolutePath(), dest + "\\" + child.getName());
+                }
+            }
+        }
     }
 
     private static void addImportForFile(String absolutePath) {
@@ -93,10 +114,10 @@ public class SpoonLauncher {
     }
 
 
-    public static void insert(String filename, int position, String content) throws IOException {
+    private static void insert(String filename, int position, String content) throws IOException {
         BufferedReader reader = null;
         BufferedWriter writer = null;
-        ArrayList list = new ArrayList();
+        ArrayList<String> list = new ArrayList<String>();
 
         try {
             reader = new BufferedReader(new FileReader(filename));
@@ -105,7 +126,14 @@ public class SpoonLauncher {
                 list.add(tmp);
             reader.close();
 
-            list.add(position, content);
+            int tmpPos = position;
+            for (String line : list) {
+                if (line.contains("package")) {
+                    tmpPos = list.indexOf(line) + 1;
+                }
+            }
+
+            list.add(tmpPos, content);
 
             writer = new BufferedWriter(new FileWriter(filename));
             for (int i = 0; i < list.size(); i++)

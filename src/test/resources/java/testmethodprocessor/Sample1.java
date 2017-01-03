@@ -1,6 +1,4 @@
 package java.testmethodprocessor;
-import core.Program;
-import core.GraphicsProgram;
 
 /**
  * TODO --> Adding Comment
